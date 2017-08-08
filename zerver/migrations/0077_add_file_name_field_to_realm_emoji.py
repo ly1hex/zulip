@@ -44,7 +44,7 @@ class Uploader(object):
         self.emoji_size = (64, 64)
 
     def upload_files(self, response, resized_image, dst_path_id):
-        # type: (Response, binary_type, Text) -> None
+        # type: (Response, Optional[binary_type], Text) -> None
         raise NotImplementedError()
 
     def get_dst_path_id(self, realm_id, url, emoji_name):
@@ -100,7 +100,7 @@ class LocalUploader(Uploader):
             f.write(file_data)
 
     def upload_files(self, response, resized_image, dst_path_id):
-        # type: (Response, binary_type, Text) -> None
+        # type: (Response, Optional[binary_type], Text) -> None
         dst_file = os.path.join(settings.LOCAL_UPLOADS_DIR, 'avatars', dst_path_id)
         if resized_image:
             self.write_local_file(dst_file, resized_image)
@@ -124,7 +124,7 @@ class S3Uploader(Uploader):
         key.set_contents_from_string(force_str(file_data), headers=headers)
 
     def upload_files(self, response, resized_image, dst_path_id):
-        # type: (Response, binary_type, Text) -> None
+        # type: (Response, Optional[binary_type], Text) -> None
         headers = None  # type: Optional[Dict[Text, Text]]
         content_type = response.headers.get(str("Content-Type")) or guess_type(dst_path_id)[0]
         if content_type:
