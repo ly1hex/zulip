@@ -227,7 +227,7 @@ class Realm(ModelReprMixin, models.Model):
 
     @cache_with_key(get_realm_emoji_cache_key, timeout=3600*24*7)
     def get_emoji(self):
-        # type: () -> Dict[Text, Optional[Dict[str, Iterable[Text]]]]
+        # type: () -> Dict[Text, Dict[str, Iterable[Text]]]
         return get_realm_emoji_uncached(self)
 
     def get_admin_users(self):
@@ -1851,9 +1851,9 @@ class CustomProfileField(models.Model):
         (FLOAT, u'Float', check_float, float),
         (SHORT_TEXT, u'Short Text', check_short_string, str),
         (LONG_TEXT, u'Long Text', check_string, str),
-    ]  # type: List[Tuple[int, Text, Callable[[str, Any], str], Callable[[Any], Any]]]
+    ]  # type: List[Tuple[int, Text, Callable[[str, Any], Optional[str]], Callable[[Any], Any]]]
 
-    FIELD_VALIDATORS = {item[0]: item[2] for item in FIELD_TYPE_DATA}  # type: Dict[int, Callable[[str, Any], str]]
+    FIELD_VALIDATORS = {item[0]: item[2] for item in FIELD_TYPE_DATA}  # type: Dict[int, Callable[[str, Any], Optional[str]]]
     FIELD_CONVERTERS = {item[0]: item[3] for item in FIELD_TYPE_DATA}  # type: Dict[int, Callable[[Any], Any]]
     FIELD_TYPE_CHOICES = [(item[0], item[1]) for item in FIELD_TYPE_DATA]  # type: List[Tuple[int, Text]]
 
