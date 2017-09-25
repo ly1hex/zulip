@@ -112,7 +112,7 @@ def send_future_email(template_prefix, to_user_id=None, to_email=None, from_name
     if to_user_id is not None:
         to_field = {'user_id': to_user_id}  # type: Dict[str, Any]
     else:
-        to_field = {'address': parseaddr(to_email)[1]}
+        to_field = {'address': parseaddr(to_email)[1]}  # type: ignore  # typeshed issue? (accepts None)
 
     ScheduledEmail.objects.create(
         type=EMAIL_TYPES[template_name],
