@@ -43,7 +43,7 @@ class Addressee(object):
     #
     # This should be treated as an immutable class.
     def __init__(self, msg_type, user_profiles=None, stream_name=None, topic=None):
-        # type: (str, Optional[Sequence[UserProfile]], Optional[Text], Text) -> None
+        # type: (str, Optional[Sequence[UserProfile]], Optional[Text], Optional[Text]) -> None
         assert(msg_type in ['stream', 'private'])
         self._msg_type = msg_type
         self._user_profiles = user_profiles
@@ -70,11 +70,13 @@ class Addressee(object):
     def stream_name(self):
         # type: () -> Text
         assert(self.is_stream())
+        assert(self._stream_name is not None)
         return self._stream_name
 
     def topic(self):
         # type: () -> Text
         assert(self.is_stream())
+        assert(self._topic is not None)
         return self._topic
 
     @staticmethod
