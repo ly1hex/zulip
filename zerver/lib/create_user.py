@@ -27,7 +27,7 @@ def create_user_profile(realm, email, password, active, bot_type, full_name,
                         short_name, bot_owner, is_mirror_dummy, tos_version,
                         timezone, tutorial_status=UserProfile.TUTORIAL_WAITING,
                         enter_sends=False):
-    # type: (Realm, Text, Optional[Text], bool, Optional[int], Text, Text, Optional[UserProfile], bool, Text, Optional[Text], Optional[Text], bool) -> UserProfile
+    # type: (Realm, Text, Optional[Text], bool, Optional[int], Text, Text, Optional[UserProfile], bool, Optional[Text], Optional[Text], Optional[Text], bool) -> UserProfile
     now = timezone_now()
     email = UserManager.normalize_email(email)
 
